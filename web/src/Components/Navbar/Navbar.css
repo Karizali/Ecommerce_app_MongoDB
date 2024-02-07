@@ -1,0 +1,68 @@
+.salesBtn{
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("https://www.olx.com.pk/assets/iconSellBorder_noinline.d9eebe038fbfae9f90fd61d971037e02.svg");
+    background-position: center;
+    background-clip: border-box;
+    /* background-repeat: no-repeat; */
+    background-size: cover;
+
+}
+.salesBtn>img{
+    margin: 0.8rem 0 0.8rem 1.3rem;
+}
+.salesBtn>div{
+    margin: 0.8rem 1.3rem 0.8rem 2px; 
+    font-weight: 700;
+    color: #002F34;
+}
+.upperNavPart{
+    margin-left: 2.5rem;
+}
+.lowerNavPart{
+    padding: 0rem 2rem 1rem 2rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    color: #002F34;
+    margin-bottom: 2rem;
+    background-color: #FFFF;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.lowerNavPart>span{
+    margin: 0 0.7rem;
+    font-size: 15px;
+    font-weight: 400;
+    cursor: pointer;
+}
+.lowerNavPart>.allCategoriesDrop{
+    font-weight: 800;
+   /* display: flex;
+   justify-content: center;
+   align-items: center; */
+}
+.headerContainer{
+    position: sticky;
+}
+@media (max-width:800px) {
+    .lowerNavPart{
+        display: none;
+    }
+    .hidden{
+        display: none;
+    }
+    .logoSvg{
+        width: 120px;
+    }
+    .borderRadius{
+        border-radius: 50%;
+        overflow: hidden;
+    }
+}
+@media (max-width:500px) {
+    .salesBtn{
+        display: none
+    }
+}
