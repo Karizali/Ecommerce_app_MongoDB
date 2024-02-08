@@ -2,6 +2,11 @@ import express from "express";
 import path from "path";
 import cors from "cors";
 import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
+import cookieParser from 'cookie-parser';
+import bcrypt from 'bcrypt';
+
+
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -20,6 +25,76 @@ let productSchema = new mongoose.Schema({
   createdOn: { type: Date, default: Date.now }
 });
 const productModel = mongoose.model('products', productSchema);
+
+
+
+
+
+app.post("/signup", async (req, res) => {
+  const body = req.body;
+
+  if (
+    !body.firstName ||
+    !body.email ||
+    !body.password ||
+    !body.secondName) {
+
+    res.status(404).send({
+      message: "Incomplete data"
+    });
+    return;
+  }
+
+  const myPlaintextPassword = body.password;
+
+  try {
+
+    const saltRounds = await bcrypt.genSalt()
+    console.log(saltRounds)
+    let hash = await bcrypt.hash(myPlaintextPassword, saltRounds);
+    console.log(hash);
+    res.status(404).send({
+      message: `Hash is :${hash}`
+    });
+
+  }catch(error){
+    console.log(error)
+    res.status(404).send({
+      message: "Error in hash"
+    });
+  }
+
+
+});
+
+app.post("/login", (req, res) => {
+  const body = req.body;
+  if (!body.name || !body.description || !body.price) {
+    res.status(404).send({
+      message: "Incomplete data"
+    });
+    return;
+  }
+
+  try {
+    productModel.create({
+      name: body.name,
+      price: body.price,
+      description: body.description,
+    })
+    res.send({
+      message: "product added successfully"
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "server error"
+    })
+  }
+
+
+});
+
+
 
 
 
@@ -69,7 +144,6 @@ app.post("/product", (req, res) => {
 
 
 });
-
 
 
 app.get("/product/:id", (req, res) => {

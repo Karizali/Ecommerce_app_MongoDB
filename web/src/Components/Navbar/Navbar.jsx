@@ -325,7 +325,7 @@ export default function PrimarySearchAppBar() {
                 textDecorationLine: "underline",
               }}
             >
-              Login
+              <Link to={"login"}>Login</Link>
             </Typography>
             <Link to={`/sell`} style={{ textDecoration: "none" }}>
               <div className="salesBtn">

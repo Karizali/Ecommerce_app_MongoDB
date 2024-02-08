@@ -9,16 +9,21 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import Home from './Pages/Home';
-import SellProduct from './Pages/SellProduct';
-import ProductDetailedPage from './Pages/ProductDetailedPage';
+import {
+  Home, LogIn, ProductDetailedPage,
+  SellProduct, SignUp
+} from './Pages'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App />}>
-      <Route path="" element={<Home />} />
-      <Route path="/sell" element={<SellProduct />} />
-      <Route path="/product/:productId" element={<ProductDetailedPage />} />
+    <Route path="/">
+      <Route path="" element={<App />}>
+        <Route path="" element={<Home />} />
+        <Route path="sell" element={<SellProduct />} />
+        <Route path="product/:productId" element={<ProductDetailedPage />} />
+      </Route>
+      <Route path="login" element={<LogIn />} />
+      <Route path="signup" element={<SignUp />} />
     </Route>
   )
 );
