@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import ContextProvider from "./Components/Context/Context"
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -13,7 +14,10 @@ import {
   Home, LogIn, ProductDetailedPage,
   SellProduct, SignUp
 } from './Pages'
+// import {useContext } from "react";
+// import { GlobalContext } from './context/Context';
 
+// let { state, dispatch } = useContext(GlobalContext);
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">
@@ -24,15 +28,18 @@ const router = createBrowserRouter(
       </Route>
       <Route path="login" element={<LogIn />} />
       <Route path="signup" element={<SignUp />} />
+      <Route path="*" />
     </Route>
   )
 );
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // <React.StrictMode>
-  <RouterProvider router={router} />
-  // </React.StrictMode>
+  <React.StrictMode>
+    <ContextProvider>
+      <RouterProvider router={router} />
+    </ContextProvider>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
