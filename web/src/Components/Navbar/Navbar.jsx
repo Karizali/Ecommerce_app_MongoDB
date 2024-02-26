@@ -13,6 +13,9 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import LoginOutlined from "@mui/icons-material/LoginOutlined";
 import MoreIcon from "@mui/icons-material/MoreVert";
+import { GlobalContext } from './../Context/Context';
+import { useContext } from "react";
+
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -55,6 +58,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
+
+  let { state, dispatch } = useContext(GlobalContext);
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -235,7 +241,9 @@ export default function PrimarySearchAppBar() {
               <path d="M25.03 21.92v-9.35l-4.99-1.66v1.05l4 1.33v8.59h-5V7.85h-8.38v14.08h-.4v1h15.17v-1zm-6.98-11.68v11.68h-6.4V8.84h6.4z"></path>
               <path d="M15.17 10.3h1.61v.8h-1.6zm-2.42 0h1.6v.8h-1.6zm2.42 1.6h1.61v.81h-1.6zm-2.42 0h1.6v.81h-1.6zm2.42 2.42h1.61v.81h-1.6zm-2.42 0h1.6v.81h-1.6zm2.42 1.62h1.61v.8h-1.6zm-2.42 0h1.6v.8h-1.6zm2.42 2.42h1.61v.8h-1.6zm-2.42 0h1.6v.8h-1.6zm8.87-4.04h.8v.81h-.8zm-1.62 0h.8v.81H20zm1.62 1.62h.8v.8h-.8zm-1.62 0h.8v.8H20zm1.62 2.42h.8v.8h-.8zm-1.62 0h.8v.8H20z"></path>
             </svg>
+            
           </Toolbar>
+          <Typography>{state.user.firstName}</Typography>
           <Toolbar sx={{ padding: "0", margin: "0" }}>
             <svg
               height="2rem"
@@ -348,7 +356,7 @@ export default function PrimarySearchAppBar() {
       </Box>
       <div className="lowerNavPart">
         <span className="allCategoriesDrop">
-          All categories{" "}
+          All Catagories {" "}
           <KeyboardArrowDownIcon
             sx={{ padding: 0, margin: 0, fontSize: "2rem" }}
           />

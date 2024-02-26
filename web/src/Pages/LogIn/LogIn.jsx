@@ -14,12 +14,14 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import './LogIn.css'
-import { useState } from "react";
+import { useState,useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { GlobalContext } from './../../Components/Context/Context';
 
 function Copyright(props) {
+  
   return (
     <Typography
       variant="body2"
@@ -39,9 +41,9 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function LogIn() {
-  const baseURL = "http://localhost:5000";
   const [user, setUser] = useState(null);
-
+  
+  let { state, dispatch } = useContext(GlobalContext);
   // const handleSubmit = (event) => {
   //   event.preventDefault();
   //   const data = new FormData(event.currentTarget);
@@ -72,7 +74,7 @@ export default function LogIn() {
       (async () => {
         try {
           const response = await axios.post(
-            `${baseURL}/login`,
+            `${state.baseUrl}/api/v1/login`,
             {
               email: values.email,
               password: values.password,
@@ -81,10 +83,19 @@ export default function LogIn() {
               withCredentials: true,
             }
           );
+
+          dispatch({
+            type: 'USER_LOGIN',
+            payload: response.data.profile
+          })
+
           setUser(response.data);
           console.log(response);
         } catch (error) {
           console.log(error);
+          dispatch({
+            type: 'USER_LOGOUT'
+          })
         }
       })();
 

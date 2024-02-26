@@ -14,10 +14,11 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./SignUp.css";
-import { useState } from "react";
+import { useState,useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { GlobalContext } from './../../Components/Context/Context';
 
 function Copyright(props) {
   return (
@@ -39,7 +40,7 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-  const baseURL = "http://localhost:5000";
+  let { state, dispatch } = useContext(GlobalContext);
   const [user, setUser] = useState(null);
 
   // const handleSubmit = (event) => {
@@ -82,7 +83,7 @@ export default function SignUp() {
       (async () => {
         try {
           const response = await axios.post(
-            `${baseURL}/signup`,
+            `${state.baseUrl}/api/v1/signup`,
             {
               email: values.email,
               password: values.password,

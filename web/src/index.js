@@ -18,26 +18,27 @@ import {
 // import { GlobalContext } from './context/Context';
 
 // let { state, dispatch } = useContext(GlobalContext);
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/">
-      <Route path="" element={<App />}>
-        <Route path="" element={<Home />} />
-        <Route path="sell" element={<SellProduct />} />
-        <Route path="product/:productId" element={<ProductDetailedPage />} />
-      </Route>
-      <Route path="login" element={<LogIn />} />
-      <Route path="signup" element={<SignUp />} />
-      <Route path="*" />
-    </Route>
-  )
-);
+// const router = createBrowserRouter(
+//   createRoutesFromElements(
+//     <Route path="/">
+//       <Route path="" element={<App />}>
+//         <Route path="" element={<Home />} />
+//         <Route path="sell" element={<SellProduct />} />
+//         <Route path="product/:productId" element={<ProductDetailedPage />} />
+//       </Route>
+//       <Route path="login" element={<LogIn />} />
+//       <Route path="signup" element={<SignUp />} />
+//       <Route path="*" />
+//     </Route>
+//   )
+// );
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ContextProvider>
-      <RouterProvider router={router} />
+      {/* <RouterProvider router={router} /> */}
+      <App />
     </ContextProvider>
   </React.StrictMode>
 );

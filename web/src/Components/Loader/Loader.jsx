@@ -1,7 +1,7 @@
 import { LoadingButton } from '@mui/lab';
 
-function Loading(){
-    return <LoadingButton />;
+function Loader(){
+    return <>Loading</>;
 }
 
-export default Loading;
+export default Loader;
