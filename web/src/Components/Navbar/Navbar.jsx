@@ -2,19 +2,20 @@ import * as React from "react";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 import {
-  styled,alpha,AppBar,
-  Box,Toolbar,IconButton,
-  Typography,InputBase,Badge,
-  MenuItem,Menu,Paper,
+  styled, alpha, AppBar,
+  Box, Toolbar, IconButton,
+  Typography, InputBase, Badge,
+  MenuItem, Menu, Paper, Button
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
-import LoginOutlined from "@mui/icons-material/LoginOutlined";
+import LogoutOutlined from "@mui/icons-material/LogoutOutlined";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { GlobalContext } from './../Context/Context';
 import { useContext } from "react";
+import axios from "axios";
 
 
 const Search = styled("div")(({ theme }) => ({
@@ -66,6 +67,26 @@ export default function PrimarySearchAppBar() {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+
+  const logoutHandler = async () => {
+    try {
+      const response = await axios.post(
+        `${state.baseUrl}/api/v1/logout`
+      );
+
+      
+      dispatch({
+        type: 'USER_LOGOUT'
+      })
+
+      // setUser(response.data);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+      // setError(error?.response?.data?.message);
+    }
+  }
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -138,9 +159,9 @@ export default function PrimarySearchAppBar() {
             aria-label="show 17 new notifications"
             color="inherit"
           >
-            <LoginOutlined />
+            <LogoutOutlined />
           </IconButton>
-          <p>Login</p>
+          <p onClick={logoutHandler}>Logout</p>
         </MenuItem>
       </Link>
       <MenuItem onClick={handleProfileMenuOpen}>
@@ -241,10 +262,10 @@ export default function PrimarySearchAppBar() {
               <path d="M25.03 21.92v-9.35l-4.99-1.66v1.05l4 1.33v8.59h-5V7.85h-8.38v14.08h-.4v1h15.17v-1zm-6.98-11.68v11.68h-6.4V8.84h6.4z"></path>
               <path d="M15.17 10.3h1.61v.8h-1.6zm-2.42 0h1.6v.8h-1.6zm2.42 1.6h1.61v.81h-1.6zm-2.42 0h1.6v.81h-1.6zm2.42 2.42h1.61v.81h-1.6zm-2.42 0h1.6v.81h-1.6zm2.42 1.62h1.61v.8h-1.6zm-2.42 0h1.6v.8h-1.6zm2.42 2.42h1.61v.8h-1.6zm-2.42 0h1.6v.8h-1.6zm8.87-4.04h.8v.81h-.8zm-1.62 0h.8v.81H20zm1.62 1.62h.8v.8h-.8zm-1.62 0h.8v.8H20zm1.62 2.42h.8v.8h-.8zm-1.62 0h.8v.8H20z"></path>
             </svg>
-            
+
           </Toolbar>
-          <Typography>{state.user.firstName}</Typography>
-          <Toolbar sx={{ padding: "0", margin: "0" }}>
+          <Typography>{state?.user?.firstName}</Typography>
+          <Toolbar sx={{ padding: "0", margin: "0", display: "flex" }}>
             <svg
               height="2rem"
               viewBox="0 0 36.289 20.768"
@@ -277,6 +298,7 @@ export default function PrimarySearchAppBar() {
                   }}
                 />
               </Search>
+
             </div>
             <div className="hidden">
               <Paper
@@ -346,7 +368,7 @@ export default function PrimarySearchAppBar() {
                 onClick={handleMobileMenuOpen}
                 color="inherit"
               >
-                <MoreIcon />
+                <MoreIcon sx={{ color: "black" }} />
               </IconButton>
             </Box>
           </Toolbar>

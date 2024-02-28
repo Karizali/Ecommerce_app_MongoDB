@@ -16,8 +16,8 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use(cors({
-    origin: ['http://localhost:3000', "*"],
-    credentials: true
+  origin: ['http://localhost:3000', "*"],
+  credentials: true
 }));
 
 
@@ -42,7 +42,9 @@ app.use((req, res, next) => {
       if (decodedData.exp < nowDate) {
         res.cookie('Token', '', {
           maxAge: 1,
-          httpOnly: true
+          httpOnly: true,
+          sameSite: 'none',
+          secure: true
         })
         res.send({ message: "token expired" })
       } else {

@@ -14,14 +14,15 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import './LogIn.css'
-import { useState,useContext } from "react";
+import { useState, useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { GlobalContext } from './../../Components/Context/Context';
+import { colors } from "@mui/material";
 
 function Copyright(props) {
-  
+
   return (
     <Typography
       variant="body2"
@@ -41,8 +42,9 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function LogIn() {
+  const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
-  
+
   let { state, dispatch } = useContext(GlobalContext);
   // const handleSubmit = (event) => {
   //   event.preventDefault();
@@ -78,9 +80,6 @@ export default function LogIn() {
             {
               email: values.email,
               password: values.password,
-            },
-            {
-              withCredentials: true,
             }
           );
 
@@ -93,6 +92,7 @@ export default function LogIn() {
           console.log(response);
         } catch (error) {
           console.log(error);
+          setError(error?.response?.data?.message);
           dispatch({
             type: 'USER_LOGOUT'
           })
@@ -121,6 +121,14 @@ export default function LogIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+          {
+            error ?
+              <Typography sx={{color:"red"}} component="h1" variant="h6">
+                {error}
+              </Typography>
+              :
+              null
+          }
           <Box
             component="form"
             onSubmit={formik.handleSubmit}

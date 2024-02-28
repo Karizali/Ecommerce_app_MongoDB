@@ -2,8 +2,8 @@ import express from "express";
 import { productModel } from '../dbRepo/Models.mjs';
 
 
-const router = express.Router()
 
+const router = express.Router()
 
 router.get("/products", async (req, res) => {
 

@@ -7,18 +7,22 @@ import {
   Button, Typography, TextField,
 } from '@mui/material';
 import './SellProduct.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useContext } from 'react';
 import CardMedia from "@mui/material/CardMedia";
+import { GlobalContext } from '../../Components/Context/Context';
 
 function SellProduct() {
 
   const [products, setProducts] = useState([]);
   const [editingProducts, setEditingProducts] = useState({});
   const [isEditing, setIsEditing] = useState(false);
+  let { state, dispatch } = useContext(GlobalContext);
 
   const getProducts = async () => {
+
+
     try {
-      const response = await axios.get('http://localhost:5000/products');
+      const response = await axios.get(`${state.baseUrl}/api/v1/products`);
       setProducts(response.data.data.reverse())
       console.log(response.data.data)
     } catch (error) {
@@ -30,7 +34,7 @@ function SellProduct() {
   const editProduct = async (product) => {
     console.log(product)
     try {
-      const response = await axios.put(`http://localhost:5000/product/${editingProducts.id}`,{
+      const response = await axios.put(`${state.baseUrl}/api/v1/product/${editingProducts.id}`,{
         id:editingProducts._id,
         name: product.editProductName,
         price: product.editProductPrice,
@@ -45,12 +49,14 @@ function SellProduct() {
 
   }
   const deleteProduct = async (id) => {
+    console.log(id)
     try {
-      const response = await axios.delete(`http://localhost:5000/product/${id}`, {
+      const response = await axios.delete(`${state.baseUrl}/api/v1/product/${id}`, {
         name: editingProducts.name,
         price: editingProducts.price,
         description: editingProducts.description
       });
+     
       // setProducts(response.data.data)
       getProducts()
       console.log(response)
@@ -89,10 +95,13 @@ function SellProduct() {
 
       (async () => {
         try {
-          const response = await axios.post('http://localhost:5000/product', {
+          const response = await axios.post(`${state.baseUrl}/api/v1/product`, {
             name: values.productName,
             price: values.productPrice,
             description: values.productDescription
+          },
+          {
+            withCredentials: true,
           });
           getProducts()
           console.log(response)

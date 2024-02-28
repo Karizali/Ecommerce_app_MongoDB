@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./SignUp.css";
-import { useState,useContext } from "react";
+import { useState, useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -42,6 +42,7 @@ const defaultTheme = createTheme();
 export default function SignUp() {
   let { state, dispatch } = useContext(GlobalContext);
   const [user, setUser] = useState(null);
+  const [error, setError] = useState(null);
 
   // const handleSubmit = (event) => {
   //   event.preventDefault();
@@ -89,14 +90,12 @@ export default function SignUp() {
               password: values.password,
               firstName: values.firstName,
               lastName: values.lastName,
-            },
-            {
-              withCredentials: true,
             }
           );
           setUser(response.data);
           console.log(response);
         } catch (error) {
+          setError(error?.response?.data?.message);
           console.log(error);
         }
       })();
@@ -123,6 +122,14 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
+          {
+            error ?
+              <Typography sx={{ color: "red" }} component="h1" variant="h6">
+                {error}
+              </Typography>
+              :
+              null
+          }
           <Box
             component="form"
             noValidate

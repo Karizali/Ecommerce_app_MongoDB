@@ -31,8 +31,12 @@ function Home() {
     useEffect(() => {
         (async () => {
             try {
-                setLoading(true)
-                const response = await axios.get('https://dummyjson.com/products');
+                setLoading(true);
+                
+                // To prevent error because this doesn't access Header(withCredential:true)
+                const uninterceptedAxiosInstance = axios.create();
+
+                const response = await uninterceptedAxiosInstance.get('https://dummyjson.com/products');
                 setData(response.data.products);
                 const categories = response.data.products.map(element => element.category)
 

@@ -2,7 +2,7 @@ import './App.css';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import { Outlet } from 'react-router-dom';
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import { GlobalContext } from './Components/Context/Context';
 import axios from 'axios';
 import {
@@ -23,6 +23,7 @@ import Loader from './Components/Loader';
 function App() {
 
   let { state, dispatch } = useContext(GlobalContext);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -47,6 +48,29 @@ function App() {
     })()
 
   }, [])
+
+
+  useEffect(() => {
+
+    axios.interceptors.request.use(function (config) {
+      config.withCredentials = true;
+      return config;
+    }, function (error) {
+      return Promise.reject(error);
+    });
+    axios.interceptors.response.use(function (response) {
+      return response;
+    }, function (error) {
+      if (error.response.status === 401) {
+        dispatch({
+          type: 'USER_LOGOUT'
+        })
+      }
+      return Promise.reject(error);
+    });
+  }, [])
+
+
 
   const router = createBrowserRouter(
     createRoutesFromElements(
