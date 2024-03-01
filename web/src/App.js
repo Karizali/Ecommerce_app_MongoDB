@@ -75,13 +75,16 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/">
-        {state.isLogin === true ?
+        {state.isLogin === true ? 
+        <>
           <Route path="" element={<Layout />}>
             <Route path="" element={<Home />} />
             <Route path="sell" element={<SellProduct />} />
             <Route path="product/:productId" element={<ProductDetailedPage />} />
             <Route path="*" element={<Home />} />
           </Route>
+          {/* <Route path="signup" element={<SignUp />} /> */}
+        </>
           :
           null
         }

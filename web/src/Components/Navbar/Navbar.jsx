@@ -75,7 +75,7 @@ export default function PrimarySearchAppBar() {
         `${state.baseUrl}/api/v1/logout`
       );
 
-      
+
       dispatch({
         type: 'USER_LOGOUT'
       })
@@ -335,22 +335,13 @@ export default function PrimarySearchAppBar() {
                 <SearchIcon />
               </IconButton>
             </div>
-            <Typography
-              variant="h7"
-              noWrap
-              component="div"
-              sx={{
-                display: { xs: "none", sm: "block" },
-                padding: "0 1rem",
-                color: "#002F34",
-                fontWeight: "800",
-                textDecorationLine: "underline",
-              }}
-            >
-              <Link to={"login"}>Login</Link>
-            </Typography>
-            <Link to={`/sell`} style={{ textDecoration: "none" }}>
-              <div className="salesBtn">
+            <div className="hidden">
+
+              <Button onClick={logoutHandler} sx={{ marginLeft: "1rem" }} variant="contained">Logout</Button>
+            </div>
+
+            <Link to={`/sell`}  style={{ textDecoration: "none", marginLeft:"1.5rem" }}>
+              <div className="salesBtn" >
                 <img
                   src="https://www.olx.com.pk/assets/iconPlusSell_noinline.75fc7ea23e80b50447cf5757d8ef083a.svg"
                   alt=""
