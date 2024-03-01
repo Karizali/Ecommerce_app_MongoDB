@@ -1,14 +1,15 @@
 import express from "express";
 import { productModel } from '../dbRepo/Models.mjs';
+import mongoose from "mongoose";
 
 
 
 const router = express.Router()
 
 router.get("/products", async (req, res) => {
-
+    const userId = req.body.token._id;
     try {
-        let data = await productModel.find({});
+        let data = await productModel.find({ owner: userId });
 
         res.send({
             message: "got all products successfully",
@@ -27,6 +28,7 @@ router.get("/products", async (req, res) => {
 
 router.post("/product", (req, res) => {
     const body = req.body;
+    // console.log("_id "+body.token._id)
     if (!body.name || !body.description || !body.price) {
         res.status(404).send({
             message: "Incomplete data"
@@ -39,6 +41,7 @@ router.post("/product", (req, res) => {
             name: body.name,
             price: body.price,
             description: body.description,
+            owner: body.token._id
         })
         res.send({
             message: "product added successfully"
@@ -146,4 +149,4 @@ router.put("/product/:id", async (req, res) => {
 
 });
 
-export default router ;
+export default router;

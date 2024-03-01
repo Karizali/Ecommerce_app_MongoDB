@@ -5,6 +5,7 @@ import authApis from './apis/AuthAPI.mjs';
 import productApis from './apis/Product.mjs'
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
+import { userModel } from "./dbRepo/Models.mjs";
 
 
 const app = express();
@@ -49,7 +50,7 @@ app.use((req, res, next) => {
         res.send({ message: "token expired" })
       } else {
         console.log("token approved");
-        req.body.token = decodedData
+        req.body.token = decodedData;
         next();
       }
     } else {
@@ -59,6 +60,35 @@ app.use((req, res, next) => {
 
 })
 
+const getUserDetails = async (req, res) => {
+  let _id;
+  if (req.params.id) {
+    _id = req.params._id;
+  } else {
+    _id = req.body.token._id;
+  }
+
+  try {
+    const user = await userModel.findOne({ _id: _id }, "firstName lastName email -_id").exec();
+    if (!user) {
+      res.status(404).send({})
+      return;
+    }
+    else {
+      res.status(200).send(user);
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Server Error in getting user's details",
+    });
+  }
+
+}
+
+app.use('/api/v1/profile',getUserDetails);
+
+app.use('/api/v1/profile/:id',getUserDetails);
 
 app.use('/api/v1', productApis)
 

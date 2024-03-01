@@ -98,7 +98,8 @@ function SellProduct() {
           const response = await axios.post(`${state.baseUrl}/api/v1/product`, {
             name: values.productName,
             price: values.productPrice,
-            description: values.productDescription
+            description: values.productDescription,
+            owner: state.user._id,
           },
           {
             withCredentials: true,

@@ -264,7 +264,7 @@ export default function PrimarySearchAppBar() {
             </svg>
 
           </Toolbar>
-          <Typography>{state?.user?.firstName}</Typography>
+          <Typography sx={{color:"black",textTransform:"capitalize", textAlign:"right",marginRight:"3rem"}}>{state?.user?.firstName}</Typography>
           <Toolbar sx={{ padding: "0", margin: "0", display: "flex" }}>
             <svg
               height="2rem"

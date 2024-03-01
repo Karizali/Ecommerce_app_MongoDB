@@ -28,11 +28,11 @@ function App() {
   useEffect(() => {
     (async () => {
       try {
-        const response = await axios.get(`${state.baseUrl}/api/v1/products`,
+        const response = await axios.get(`${state.baseUrl}/api/v1/profile`,
           {
             withCredentials: true,
           });
-        console.log(response.data.data)
+        console.log(response)
         dispatch({
           type: 'USER_LOGIN',
           payload: response.data
@@ -83,7 +83,7 @@ function App() {
             <Route path="product/:productId" element={<ProductDetailedPage />} />
             <Route path="*" element={<Home />} />
           </Route>
-          {/* <Route path="signup" element={<SignUp />} /> */}
+          <Route path="signup" element={<SignUp />} />
         </>
           :
           null
